@@ -1,13 +1,13 @@
 const express = require('express');
 const { createUser } = require('../db/userDB');
-const { userValidation, loginValidation } = require('../middlewares/userMiddleware');
+const { userValidation, loginValidation } = require('../middlewares/userMiddlewares');
 
 const user = express.Router();
 
-user.put('/create', userValidation, async (req, res) => {
+user.post('/create', userValidation, async (req, res) => {
   try {
-    await createUser(req.body);
-    res.status(201).json({ message: 'Usuário criado com sucesso' });
+    const id = await createUser(req.body);
+    res.status(201).json({ id });
 
   } catch (error) {
     console.log(error.message);

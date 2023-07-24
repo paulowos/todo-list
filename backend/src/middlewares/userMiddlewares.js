@@ -1,6 +1,7 @@
 const z = require('zod');
 const connection = require('../db/connection');
 const argon2 = require('argon2');
+const { loginUser } = require('../db/userDB');
 
 
 const emailValidation = (req, res, next) => {
@@ -64,10 +65,14 @@ const nameValidation = (req, res, next) => {
 };
 
 const emailVerification = async (req, res, next) => {
-  const [[rows]] = await connection.query(`SELECT id, password FROM users WHERE email = ?`, [req.body.email]);
-  if (!rows) return res.status(401).json({ error: 'Email inválido' });
-  req.body = { ...req.body, id: rows.id, hash: rows.password };
-  next();
+  try {
+    const rows = await loginUser(req.body);
+    if (!rows) return res.status(401).json({ error: 'Email inválido' });
+    req.body = { ...req.body, id: rows.id, hash: rows.password };
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao autenticar' });
+  }
 };
 
 const passwordVerification = async (req, res, next) => {

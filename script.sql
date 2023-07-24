@@ -8,11 +8,11 @@ CREATE TABLE users
   password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE todos
+CREATE TABLE tasks
 (
-  id SERIAL PRIMARY KEY,
+  id CHAR(8) PRIMARY KEY,
   task VARCHAR(255) NOT NULL,
-  done BOOLEAN NOT NULL DEFAULT FALSE,
+  completed BOOLEAN NOT NULL DEFAULT FALSE,
   deleted BOOLEAN NOT NULL DEFAULT FALSE,
   userId CHAR(36) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -25,6 +25,6 @@ INSERT INTO users (id, name, email, password  ) VALUES(
   -- senha 'teste123456' 
 );
 
-INSERT INTO todos ( task, userId ) VALUES(
-  'Teste', '36b8f84d-df4e-4d49-b662-bcde71a8764f'
+INSERT INTO tasks (id, task, userId ) VALUES(
+  'dac0d3bc', 'Teste', '36b8f84d-df4e-4d49-b662-bcde71a8764f'
 );
