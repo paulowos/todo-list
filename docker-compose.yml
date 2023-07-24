@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - db
 
   backend:
     build: ./backend
@@ -31,6 +33,12 @@ services:
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_USER: ${DATABASE_USER}
+      API_PORT: ${API_PORT}
     volumes:
       - ./backend:/app
     command: npm run dev
+    networks:
+      - db
+
+networks:
+  db:
