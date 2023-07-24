@@ -1,4 +1,6 @@
 const z = require('zod');
+const connection = require('../db/connection');
+const argon2 = require('argon2');
 
 
 const emailValidation = (req, res, next) => {
@@ -61,7 +63,21 @@ const nameValidation = (req, res, next) => {
   }
 };
 
+const emailVerification = async (req, res, next) => {
+  const [[rows]] = await connection.query(`SELECT id, password FROM users WHERE email = ?`, [req.body.email]);
+  if (!rows) return res.status(401).json({ error: 'Email inválido' });
+  req.body = { ...req.body, id: rows.id, hash: rows.password };
+  next();
+};
+
+const passwordVerification = async (req, res, next) => {
+  const verification = await argon2.verify(req.body.hash, req.body.password);
+  if (!verification) return res.status(401).json({ error: 'Senha inválida' });
+  req.body = { id: req.body.id };
+  next();
+};
+
 module.exports = {
   userValidation: [nameValidation, emailValidation, passwordValidation],
-  loginValidation: [emailValidation, passwordValidation],
+  loginValidation: [emailValidation, passwordValidation, emailVerification, passwordVerification],
 };

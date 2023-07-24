@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, loginUser } = require('../db/userDB');
+const { createUser } = require('../db/userDB');
 const { userValidation, loginValidation } = require('../middlewares/userMiddleware');
 
 const user = express.Router();
@@ -16,11 +16,8 @@ user.put('/create', userValidation, async (req, res) => {
 });
 
 user.post('/login', loginValidation, async (req, res) => {
-  const id = await loginUser(req.body);
-  if (id) {
-    return res.status(200).json(id);
-  }
-  res.status(401).json({ error: 'Usuário ou senha inválidos' });
+  const { id } = req.body;
+  res.status(200).json({ id });
 });
 
 module.exports = user;
