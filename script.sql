@@ -18,7 +18,11 @@ CREATE TABLE todos
 );
 
 INSERT INTO users (id, name, email, password  ) VALUES(
-  '36b8f84d-df4e-4d49-b662-bcde71a8764f','Teste', 'test@test.com', 'test12345678'   
+  '36b8f84d-df4e-4d49-b662-bcde71a8764f',
+  'Teste', 
+  'teste@teste.com',
+  '$argon2id$v=19$m=65536,t=3,p=4$KvjALcdeCyhnKm03D8OyMg$blhWago0QpBiny1O0humQll9ndOQKfeY//NEfFqOddI'  
+  -- senha 'teste123456' 
 );
 
 INSERT INTO todos ( task, userId ) VALUES(
