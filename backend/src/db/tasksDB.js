@@ -24,6 +24,14 @@ const completeTask = async (id, userID) => {
   return rows.affectedRows;
 };
 
+const editTask = async (task, id, userID) => {
+  const [rows] = await connection.execute(
+    `UPDATE tasks SET task = ? WHERE id = ? AND userid = ?`,
+    [task, id, userID],
+  );
+  return rows.affectedRows;
+};
+
 const deleteTask = async (id, userID) => {
   const [rows] = await connection.execute(
     `UPDATE tasks SET deleted = true 
@@ -37,6 +45,7 @@ module.exports = {
   createTask,
   completeTask,
   deleteTask,
+  editTask,
   getTasks
 }
 

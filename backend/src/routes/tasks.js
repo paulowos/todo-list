@@ -1,5 +1,5 @@
 const express = require('express');
-const { createTask, completeTask, getTasks, deleteTask } = require('../db/tasksDB');
+const { createTask, completeTask, getTasks, deleteTask, editTask } = require('../db/tasksDB');
 const { idValidation, taskValidation } = require('../middlewares/tasksMiddlewares');
 
 
@@ -41,6 +41,22 @@ tasks.patch('/:taskID', async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: 'Erro ao completar tarefa' });
+  }
+});
+
+tasks.put('/:taskID', taskValidation, async (req, res) => {
+  try {
+    const { taskID } = req.params;
+    const { authorization } = req.headers;
+    const { task } = req.body;
+    const affectedRows = await editTask(task, taskID, authorization);
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: 'Tarefa não encontrada' });
+    }
+    res.status(200).json({ affectedRows });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: 'Erro ao editar tarefa' });
   }
 });
 
