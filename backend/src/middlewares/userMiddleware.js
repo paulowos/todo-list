@@ -62,5 +62,6 @@ const nameValidation = (req, res, next) => {
 };
 
 module.exports = {
-  userValidation: [nameValidation, emailValidation, passwordValidation]
+  userValidation: [nameValidation, emailValidation, passwordValidation],
+  loginValidation: [emailValidation, passwordValidation],
 };

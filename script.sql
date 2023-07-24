@@ -18,7 +18,7 @@ CREATE TABLE todos
 );
 
 INSERT INTO users (id, name, email, password  ) VALUES(
-  '36b8f84d-df4e-4d49-b662-bcde71a8764f','Teste', 'test@test', 'test'   
+  '36b8f84d-df4e-4d49-b662-bcde71a8764f','Teste', 'test@test.com', 'test12345678'   
 );
 
 INSERT INTO todos ( task, userId ) VALUES(
