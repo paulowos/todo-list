@@ -15,7 +15,9 @@ app.use(rateLimit({
   max: 100,
   message: 'Too many requests from this IP, please try again after 15 minutes.',
 }));
-app.use(morgan('dev'));
+app.use(morgan('dev', {
+  skip: (req, res) => process.env.NODE_ENV === 'test',
+}));
 app.use(express.json());
 
 app.use(router);

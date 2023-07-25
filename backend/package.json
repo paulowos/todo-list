@@ -4,7 +4,9 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "test": "mocha ./src/tests/**/*.test.js",
+    "test": "mocha ./tests/**/*.test.js",
+    "watch": "mocha ./tests/**/*.test.js --watch",
+    "coverage": "nyc --reporter=html mocha ./tests/**/*.test.js",
     "dev": "nodemon ./src/server.js",
     "start": "node ./src/server.js"
   },
@@ -27,6 +29,7 @@
     "chai-http": "4.4.0",
     "mocha": "10.2.0",
     "nodemon": "3.0.1",
+    "nyc": "15.1.0",
     "sinon": "15.2.0"
   }
 }
