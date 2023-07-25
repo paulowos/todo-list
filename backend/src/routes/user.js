@@ -26,9 +26,6 @@ user.post('/create', userValidation, async (req, res) => {
 user.put('/', editValidation, async (req, res) => {
   try {
     const affectedRows = await editUser(req.body);
-    if (affectedRows === 0) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
     res.status(200).json({ affectedRows });
   } catch (error) {
     console.log(error.message);

@@ -65,12 +65,12 @@ const nameValidation = (req, res, next) => {
 const newPasswordValidation = (req, res, next) => {
   const schema = z.object({
     newPassword: z.string({
-      invalid_type_error: '"new password" deve ser uma string',
-      required_error: '"new password" é obrigatório',
+      invalid_type_error: '"newPassword" deve ser uma string',
+      required_error: '"newPassword" é obrigatório',
     }).max(255, {
-      message: '"new password" deve ter no máximo 255 caracteres',
+      message: '"newPassword" deve ter no máximo 255 caracteres',
     }).min(8, {
-      message: '"new password" deve ter no mínimo 8 caracteres',
+      message: '"newPassword" deve ter no mínimo 8 caracteres',
     }),
   });
 
