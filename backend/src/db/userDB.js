@@ -14,4 +14,15 @@ const loginUser = async ({ email }) => {
   return rows;
 };
 
-module.exports = { createUser, loginUser };
+const editUser = async ({ id, email, newPassword }) => {
+  const hash = await argon2.hash(newPassword);
+  const [rows] = await connection.query(`UPDATE users SET  password = ? WHERE id = ? AND email = ?`, [hash, id, email]);
+  return rows.affectedRows;
+};
+
+const deleteUser = async ({ id, email }) => {
+  const [rows] = await connection.query(`DELETE FROM users WHERE id = ? AND email = ?`, [id, email]);
+  return rows.affectedRows;
+};
+
+module.exports = { createUser, loginUser, editUser, deleteUser };

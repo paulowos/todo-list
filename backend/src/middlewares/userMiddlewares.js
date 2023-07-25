@@ -64,10 +64,30 @@ const nameValidation = (req, res, next) => {
   }
 };
 
+const newPasswordValidation = (req, res, next) => {
+  const schema = z.object({
+    newPassword: z.string({
+      invalid_type_error: '"new password" deve ser uma string',
+      required_error: '"new password" é obrigatório',
+    }).max(255, {
+      message: '"new password" deve ter no máximo 255 caracteres',
+    }).min(8, {
+      message: '"new password" deve ter no mínimo 8 caracteres',
+    })
+  });
+
+  try {
+    schema.parse(req.body);
+    next();
+  } catch (error) {
+    res.status(400).json({ error: error.issues[0].message });
+  }
+};
+
 const emailVerification = async (req, res, next) => {
   try {
     const rows = await loginUser(req.body);
-    if (!rows) return res.status(401).json({ error: 'Email inválido' });
+    if (!rows) return res.status(401).json({ error: 'Email inválido/Não cadastrado' });
     req.body = { ...req.body, id: rows.id, hash: rows.password };
     next();
   } catch (error) {
@@ -78,11 +98,14 @@ const emailVerification = async (req, res, next) => {
 const passwordVerification = async (req, res, next) => {
   const verification = await argon2.verify(req.body.hash, req.body.password);
   if (!verification) return res.status(401).json({ error: 'Senha inválida' });
-  req.body = { id: req.body.id };
+  req.body.hash = null;
+  req.body.password = null;
   next();
 };
 
 module.exports = {
   userValidation: [nameValidation, emailValidation, passwordValidation],
   loginValidation: [emailValidation, passwordValidation, emailVerification, passwordVerification],
+  editValidation: [emailValidation, passwordValidation, newPasswordValidation, emailVerification, passwordVerification],
+
 };
