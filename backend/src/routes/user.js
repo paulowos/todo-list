@@ -36,9 +36,6 @@ user.put('/', editValidation, async (req, res) => {
 user.delete('/', loginValidation, async (req, res) => {
   try {
     const affectedRows = await deleteUser(req.body);
-    if (affectedRows === 0) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
     res.status(200).json({ affectedRows });
   } catch (error) {
     console.log(error.message);

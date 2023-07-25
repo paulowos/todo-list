@@ -89,6 +89,7 @@ const emailVerification = async (req, res, next) => {
     req.body = { ...req.body, id: rows.id, hash: rows.password };
     next();
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: 'Erro ao autenticar' });
   }
 };
