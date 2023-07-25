@@ -24,7 +24,8 @@ describe('Testando método DELETE "/"', function () {
   it('Deve conseguir deletar o usuário', async function () {
     sinon.stub(connection, 'execute')
       .onFirstCall().resolves([[{ id: 'xxx-xxx-xxx', password: test.password }]])
-      .onSecondCall().resolves([{ affectedRows: 1 }]);
+      .onSecondCall()
+.resolves([{ affectedRows: 1 }]);
     sinon.stub(argon2, 'verify').resolves(true);
     sinon.stub(argon2, 'hash').resolves('teste');
 
@@ -32,7 +33,7 @@ describe('Testando método DELETE "/"', function () {
       .delete(routes.user)
       .send({
         email: test.email,
-        password: test.password
+        password: test.password,
       });
 
     expect(connection.execute.callCount).to.equal(2);
@@ -45,7 +46,8 @@ describe('Testando método DELETE "/"', function () {
   it('Não deve conseguir deletar quando ocorrer algum erro', async function () {
     sinon.stub(connection, 'execute')
       .onFirstCall().resolves([[{ id: 'xxx-xxx-xxx', password: test.password }]])
-      .onSecondCall().rejects();
+      .onSecondCall()
+.rejects();
     sinon.stub(argon2, 'verify').resolves(true);
     sinon.stub(argon2, 'hash').resolves('teste');
 
