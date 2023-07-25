@@ -2,9 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const router = require('./routes');
 require('express-async-error');
-const rateLimit = require('express-rate-limit');
 
 const app = express();
 

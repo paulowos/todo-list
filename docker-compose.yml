@@ -26,6 +26,7 @@ services:
       - 3000:${API_PORT}
     tty: true
     stdin_open: true
+    restart: always
     depends_on:
       db:
         condition: service_healthy

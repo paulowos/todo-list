@@ -1,8 +1,6 @@
 const z = require('zod');
-const connection = require('../db/connection');
 const argon2 = require('argon2');
 const { loginUser } = require('../db/userDB');
-
 
 const emailValidation = (req, res, next) => {
   const schema = z.object({
@@ -13,7 +11,7 @@ const emailValidation = (req, res, next) => {
       message: '"email" deve ser um email válido',
     }).max(255, {
       message: '"email" deve ter no máximo 255 caracteres',
-    })
+    }),
   });
 
   try {
@@ -33,7 +31,7 @@ const passwordValidation = (req, res, next) => {
       message: '"password" deve ter no máximo 255 caracteres',
     }).min(8, {
       message: '"password" deve ter no mínimo 8 caracteres',
-    })
+    }),
   });
 
   try {
@@ -53,7 +51,7 @@ const nameValidation = (req, res, next) => {
       message: '"name" deve ter no máximo 255 caracteres',
     }).min(3, {
       message: '"name" deve ter no mínimo 3 caracteres',
-    })
+    }),
   });
 
   try {
@@ -73,7 +71,7 @@ const newPasswordValidation = (req, res, next) => {
       message: '"new password" deve ter no máximo 255 caracteres',
     }).min(8, {
       message: '"new password" deve ter no mínimo 8 caracteres',
-    })
+    }),
   });
 
   try {
@@ -106,6 +104,12 @@ const passwordVerification = async (req, res, next) => {
 module.exports = {
   userValidation: [nameValidation, emailValidation, passwordValidation],
   loginValidation: [emailValidation, passwordValidation, emailVerification, passwordVerification],
-  editValidation: [emailValidation, passwordValidation, newPasswordValidation, emailVerification, passwordVerification],
+  editValidation: [
+    emailValidation,
+    passwordValidation,
+    newPasswordValidation,
+    emailVerification,
+    passwordVerification,
+  ],
 
 };

@@ -1,6 +1,10 @@
 const express = require('express');
 const { createUser, editUser, deleteUser } = require('../db/userDB');
-const { userValidation, loginValidation, editValidation } = require('../middlewares/userMiddlewares');
+const {
+  userValidation,
+  loginValidation,
+  editValidation,
+} = require('../middlewares/userMiddlewares');
 
 const user = express.Router();
 
@@ -13,7 +17,6 @@ user.post('/create', userValidation, async (req, res) => {
   try {
     const id = await createUser(req.body);
     res.status(201).json({ id });
-
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: 'Usuário já existe' });

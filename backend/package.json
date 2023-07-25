@@ -7,6 +7,7 @@
     "test": "mocha ./tests/**/*.test.js",
     "watch": "mocha ./tests/**/*.test.js --watch",
     "coverage": "nyc --reporter=html mocha ./tests/**/*.test.js",
+    "lint": "eslint .",
     "dev": "nodemon ./src/server.js",
     "start": "node ./src/server.js"
   },
@@ -27,6 +28,8 @@
   "devDependencies": {
     "chai": "4.3.7",
     "chai-http": "4.4.0",
+    "eslint": "8.45.0",
+    "eslint-config-trybe-backend": "2.1.0",
     "mocha": "10.2.0",
     "nodemon": "3.0.1",
     "nyc": "15.1.0",

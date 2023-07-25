@@ -1,4 +1,5 @@
 const z = require('zod');
+
 const idValidation = (req, res, next) => {
   const schema = z.object({
     authorization: z.string({
@@ -6,7 +7,7 @@ const idValidation = (req, res, next) => {
       required_error: '"header authorization" é obrigatório',
     }).uuid({
       message: '"header authorization" deve ser um UUID válido',
-    })
+    }),
   });
   try {
     schema.parse(req.headers);
@@ -25,7 +26,7 @@ const taskValidation = (req, res, next) => {
       message: '"task" deve ter no máximo 255 caracteres',
     }).min(3, {
       message: '"task" deve ter no mínimo 3 caracteres',
-    })
+    }),
   });
   try {
     schema.parse(req.body);
@@ -36,5 +37,5 @@ const taskValidation = (req, res, next) => {
 };
 
 module.exports = {
-  idValidation, taskValidation
+  idValidation, taskValidation,
 };

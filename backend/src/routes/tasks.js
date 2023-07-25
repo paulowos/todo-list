@@ -2,7 +2,6 @@ const express = require('express');
 const { createTask, completeTask, getTasks, deleteTask, editTask } = require('../db/tasksDB');
 const { idValidation, taskValidation } = require('../middlewares/tasksMiddlewares');
 
-
 const tasks = express.Router();
 tasks.use(idValidation);
 
