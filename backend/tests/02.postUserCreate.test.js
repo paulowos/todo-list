@@ -14,7 +14,7 @@ const { expect } = chai;
 
 const { test, routes } = require('./helpers/consts');
 
-describe('Testando método POST "/create"', function () {
+describe('Testando método POST "/user/create"', function () {
   afterEach(function () {
     sinon.restore();
   });

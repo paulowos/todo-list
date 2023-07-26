@@ -13,7 +13,7 @@ const { expect } = chai;
 
 const { test, routes } = require('./helpers/consts');
 
-describe('Testando método PUT "/"', function () {
+describe('Testando método PUT "/user"', function () {
   beforeEach(function () {
     sinon.stub(console, 'log').resolves();
   });

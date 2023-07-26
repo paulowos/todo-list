@@ -3,7 +3,6 @@ const z = require('zod');
 const idValidation = (req, res, next) => {
   const schema = z.object({
     authorization: z.string({
-      invalid_type_error: '"header authorization" deve ser uma string',
       required_error: '"header authorization" é obrigatório',
     }).uuid({
       message: '"header authorization" deve ser um UUID válido',
@@ -13,7 +12,7 @@ const idValidation = (req, res, next) => {
     schema.parse(req.headers);
     next();
   } catch (error) {
-    res.status(400).json({ error: error.issues[0].message });
+    res.status(401).json({ error: error.issues[0].message });
   }
 };
 

@@ -7,6 +7,7 @@ module.exports = {
     /* eslint-disable-next-line */
     email256: 'abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy@example.com',
     newPassword: 'abcdefghijkl',
+    authorization: '36b8f84d-df4e-4d49-b662-bcde71a8764f',
   },
 
   routes: {
@@ -14,5 +15,25 @@ module.exports = {
     userCreate: '/user/create',
     tasks: '/tasks',
 
+  },
+
+  expected: {
+    tasksList: [
+      {
+        id: 1,
+        task: 'Tarefa 1',
+        completed: 0,
+      },
+      {
+        id: 2,
+        task: 'Tarefa 2',
+        completed: 0,
+      },
+      {
+        id: 3,
+        task: 'Tarefa 3',
+        completed: 1,
+      },
+    ],
   },
 };

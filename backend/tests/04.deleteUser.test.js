@@ -13,7 +13,7 @@ const { expect } = chai;
 
 const { test, routes } = require('./helpers/consts');
 
-describe('Testando método DELETE "/"', function () {
+describe('Testando método DELETE "/user"', function () {
   beforeEach(function () {
     sinon.stub(console, 'log').resolves();
   });
@@ -25,7 +25,7 @@ describe('Testando método DELETE "/"', function () {
     sinon.stub(connection, 'execute')
       .onFirstCall().resolves([[{ id: 'xxx-xxx-xxx', password: test.password }]])
       .onSecondCall()
-.resolves([{ affectedRows: 1 }]);
+      .resolves([{ affectedRows: 1 }]);
     sinon.stub(argon2, 'verify').resolves(true);
     sinon.stub(argon2, 'hash').resolves('teste');
 
@@ -47,7 +47,7 @@ describe('Testando método DELETE "/"', function () {
     sinon.stub(connection, 'execute')
       .onFirstCall().resolves([[{ id: 'xxx-xxx-xxx', password: test.password }]])
       .onSecondCall()
-.rejects();
+      .rejects();
     sinon.stub(argon2, 'verify').resolves(true);
     sinon.stub(argon2, 'hash').resolves('teste');
 
