@@ -21,7 +21,7 @@ tasks.post('/', taskValidation, async (req, res) => {
     const { authorization } = req.headers;
     const { task } = req.body;
     const id = await createTask(task, authorization);
-    res.status(200).json({ id, task });
+    res.status(201).json({ id, task });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: 'Erro ao criar tarefa' });

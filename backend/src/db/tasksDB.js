@@ -1,4 +1,4 @@
-const { randomBytes } = require('crypto');
+const crypto = require('crypto');
 const connection = require('./connection');
 
 const getTasks = async (userID) => {
@@ -8,7 +8,7 @@ const getTasks = async (userID) => {
 };
 
 const createTask = async (task, userID) => {
-  const id = randomBytes(4).toString('hex');
+  const id = crypto.randomBytes(4).toString('hex');
   await connection.execute(
     'INSERT INTO tasks (id, task, userid) VALUES (?,?, ?)',
     [id, task, userID],
