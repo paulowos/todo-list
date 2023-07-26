@@ -24,8 +24,6 @@ services:
     container_name: backend
     ports:
       - 3000:${API_PORT}
-    tty: true
-    stdin_open: true
     restart: always
     depends_on:
       db:
@@ -42,6 +40,24 @@ services:
     command: npm run dev
     networks:
       - db
+      - frontend
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - 5173:5173
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - frontend
+    environment:
+      - API_PORT=${API_PORT}
+      - API_HOST=${API_HOST}
+    volumes:
+      - ./frontend:/app
 
 networks:
   db:
+  frontend:
