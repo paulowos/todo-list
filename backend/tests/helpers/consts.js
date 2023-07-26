@@ -15,6 +15,7 @@ module.exports = {
     user: '/user',
     userCreate: '/user/create',
     tasks: '/tasks',
+    tasksID: '/tasks/1',
 
   },
 

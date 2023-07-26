@@ -34,7 +34,7 @@ tasks.patch('/:taskID', async (req, res) => {
     const { authorization } = req.headers;
     const affectedRows = await completeTask(taskID, authorization);
     if (affectedRows === 0) {
-      return res.status(404).json({ error: 'Tarefa não encontrada' });
+      return res.status(404).json({ error: 'Tarefa não encontrada/Já completada' });
     }
     res.status(200).json({ affectedRows });
   } catch (error) {
