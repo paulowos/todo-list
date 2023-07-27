@@ -13,9 +13,11 @@ export default function Todo() {
     });
   }, [navigate]);
   return (
-    <div>
+    <>
       <Header />
-      <button data-toggle-theme="dark,light">Todo</button>
-    </div>
+      <main className="h-screen pt-20 bg-base-200">
+        <button data-toggle-theme="dark,light">Todo</button>
+      </main>
+    </>
   );
 }
