@@ -12,7 +12,7 @@ const createUser = async ({ name, email, password }) => {
 
 const loginUser = async ({ email }) => {
   const [[rows]] = await connection
-    .execute('SELECT id, password FROM users WHERE email = ?', [email]);
+    .execute('SELECT id, name, password FROM users WHERE email = ?', [email]);
   return rows;
 };
 

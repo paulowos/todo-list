@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const loginSchema = z.object({
+const loginSchema = z.object({
   email: z.string().email(
     {
       message: 'Email inválido',
@@ -12,3 +12,5 @@ export const loginSchema = z.object({
     message: 'Senha deve ter no máximo 255 caracteres',
   })
 });
+
+export default loginSchema;

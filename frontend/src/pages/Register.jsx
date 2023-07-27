@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { themeChange } from 'theme-change';
 import Input from '../components/Input';
-import loginSchema from '../schemas/login';
+import registerSchema from '../schemas/register';
 import axios from 'axios';
 import localForage from 'localforage';
 
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
   useEffect(() => {
     themeChange(false);
@@ -22,6 +22,7 @@ export default function Login() {
   });
 
   const [form, setForm] = useState({
+    name: '',
     email: '',
     password: '',
   });
@@ -37,7 +38,7 @@ export default function Login() {
 
   const formValidation = () => {
     try {
-      loginSchema.parse(form);
+      registerSchema.parse(form);
       setError({
         path: '',
         message: '',
@@ -59,7 +60,10 @@ export default function Login() {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post('http://localhost:3000/user', form);
+      const { data } = await axios.post(
+        'http://localhost:3000/user/create',
+        form
+      );
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
       navigate('/');
@@ -73,7 +77,7 @@ export default function Login() {
     }
   };
 
-  const { email, password } = form;
+  const { email, password, name } = form;
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen gap-10">
       <div className="w-56 text-secondary">
@@ -99,20 +103,21 @@ export default function Login() {
           onChange={handleChange}
           error={error}
         />
+        <Input
+          placeholder={'Nome'}
+          name={'name'}
+          type={'text'}
+          value={name}
+          onChange={handleChange}
+          error={error}
+        />
 
         <span className="font-bold label-text text-error">
           {error.path === 'form' && error.message}
         </span>
 
         <button type="submit" className="mt-3 btn btn-wide btn-primary">
-          <span className={isLoading ? 'loading' : ''}>Entrar</span>
-        </button>
-
-        <button
-          className="mt-1 btn btn-wide btn-link text-neutral"
-          type="button"
-          onClick={() => navigate('/register')}>
-          Cadastrar
+          <span className={isLoading ? 'loading' : ''}>Cadastrar</span>
         </button>
       </form>
     </div>
