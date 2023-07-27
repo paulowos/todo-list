@@ -2,6 +2,7 @@ import localForage from 'localforage';
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 export default function Todo() {
   const navigate = useNavigate();
@@ -11,5 +12,10 @@ export default function Todo() {
       if (!id) navigate('/login');
     });
   }, [navigate]);
-  return <button data-toggle-theme="dark,light">Todo</button>;
+  return (
+    <div>
+      <Header />
+      <button data-toggle-theme="dark,light">Todo</button>
+    </div>
+  );
 }

@@ -56,10 +56,12 @@ export default function Login() {
     e.preventDefault();
     const isValid = formValidation();
     if (!isValid) return;
+    const { hostname } = window.location;
+    console.log(hostname);
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post('http://localhost:3000/user', form);
+      const { data } = await axios.post(`http://${hostname}:3000/user`, form);
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
       navigate('/');

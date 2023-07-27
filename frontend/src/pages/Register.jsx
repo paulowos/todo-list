@@ -57,11 +57,12 @@ export default function Register() {
     e.preventDefault();
     const isValid = formValidation();
     if (!isValid) return;
+    const { hostname } = window.location;
 
     try {
       setIsLoading(true);
       const { data } = await axios.post(
-        'http://localhost:3000/user/create',
+        `http://${hostname}:3000/user/create`,
         form
       );
       await localForage.setItem('id', data.id);

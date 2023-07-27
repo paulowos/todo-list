@@ -96,7 +96,7 @@ const emailVerification = async (req, res, next) => {
 
 const passwordVerification = async (req, res, next) => {
   const verification = await argon2.verify(req.body.hash, req.body.password);
-  if (!verification) return res.status(401).json({ error: 'Senha inválida' });
+  if (!verification) return res.status(401).json({ error: 'Senha incorreta' });
   req.body.hash = null;
   req.body.password = null;
   next();
