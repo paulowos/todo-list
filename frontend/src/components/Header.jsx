@@ -11,7 +11,7 @@ export default function Header() {
   };
 
   return (
-    <header className="absolute top-0 h-10 bg-base-100 navbar">
+    <header className="fixed top-0 z-20 h-10 shadow bg-base-100 navbar">
       <div className="flex items-end flex-1 gap-1 ml-1 text-primary">
         <h1 className="text-4xl ">Simple</h1>
         <h2 className="text-xl ">note</h2>

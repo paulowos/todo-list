@@ -64,7 +64,7 @@ export default function Login() {
       const { data } = await axios.post(`http://${hostname}:3000/user`, form);
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
-      navigate('/');
+      navigate('/', { state: { id: data.id } });
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -111,7 +111,7 @@ export default function Login() {
         </button>
 
         <button
-          className="mt-1 btn btn-wide btn-link text-accent"
+          className="mt-1 btn btn-wide btn-link text-warning"
           type="button"
           onClick={() => navigate('/register')}>
           Cadastrar
