@@ -9,7 +9,7 @@ export default function Input({
 }) {
   const { path, message } = error;
   return (
-    <div className=" w-full max-w-xs">
+    <div className="w-full max-w-xs ">
       <input
         type={type}
         placeholder={placeholder}
@@ -21,7 +21,7 @@ export default function Input({
         name={name}
       />
       <label className="label">
-        <span className="label-text-alt text-error font-bold">
+        <span className="font-bold label-text-alt text-error">
           {path === name && message}
         </span>
       </label>

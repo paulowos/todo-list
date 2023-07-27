@@ -74,14 +74,14 @@ export default function Login() {
 
   const { email, password } = form;
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center gap-10">
+    <div className="flex flex-col items-center justify-center w-full h-screen gap-10">
       <div className="w-56 text-secondary">
         <h1 className="text-5xl font-bold text-left">Simple</h1>
         <h2 className="text-3xl font-bold text-right">Note</h2>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="form-control w-screen flex items-center justify-center">
+        className="flex items-center justify-center w-screen form-control">
         <Input
           placeholder={'Email'}
           name={'email'}
@@ -99,16 +99,16 @@ export default function Login() {
           error={error}
         />
 
-        <span className="label-text text-error font-bold">
+        <span className="font-bold label-text text-error">
           {error.path === 'form' && error.message}
         </span>
 
-        <button type="submit" className="btn btn-wide btn-primary mt-3">
+        <button type="submit" className="mt-3 btn btn-wide btn-primary">
           <span className={isLoading ? 'loading' : ''}>Entrar</span>
         </button>
 
         <button
-          className="btn btn-wide btn-link text-neutral mt-1"
+          className="mt-1 btn btn-wide btn-link text-neutral"
           type="button"
           onClick={() => navigate('/register')}>
           Cadastrar
