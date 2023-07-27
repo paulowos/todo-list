@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import { themeChange } from 'theme-change';
+import { Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Todo from './pages/Todo';
 
 export default function App() {
-  useEffect(() => {
-    themeChange(false);
-  }, []);
   return (
-    <button data-toggle-theme="dark,light" className="btn btn-primary">
-      App
-    </button>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Todo />} />
+    </Routes>
   );
 }

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import PropTypes from 'prop-types';
 export default function Input({
   onChange,
   value,
@@ -14,14 +13,30 @@ export default function Input({
       <input
         type={type}
         placeholder={placeholder}
-        className="input input-bordered w-full max-w-xs"
+        className={`input input-bordered ${
+          path === name && 'input-error'
+        } w-full max-w-xs`}
         onChange={onChange}
         value={value}
         name={name}
       />
       <label className="label">
-        <span className="label-text-alt">{path === name && message}</span>
+        <span className="label-text-alt text-error font-bold">
+          {path === name && message}
+        </span>
       </label>
     </div>
   );
 }
+
+Input.propTypes = {
+  error: PropTypes.shape({
+    message: PropTypes.string,
+    path: PropTypes.string,
+  }),
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+}.isRequired;
