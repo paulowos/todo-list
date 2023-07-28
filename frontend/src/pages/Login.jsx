@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import loginSchema from '../schemas/login';
 import axios from 'axios';
 import localForage from 'localforage';
+import urls from '../utils/urls';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -56,12 +57,10 @@ export default function Login() {
     e.preventDefault();
     const isValid = formValidation();
     if (!isValid) return;
-    const { hostname } = window.location;
-    console.log(hostname);
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post(`http://${hostname}:3000/user`, form);
+      const { data } = await axios.post(urls.userURL, form);
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
       navigate('/', { state: { id: data.id } });
