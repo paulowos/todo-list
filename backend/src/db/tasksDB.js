@@ -18,7 +18,7 @@ const createTask = async (task, userID) => {
 
 const completeTask = async (id, userID) => {
   const [rows] = await connection.execute(
-    'UPDATE tasks SET completed = true WHERE id = ? AND userid = ? AND completed = false',
+    'UPDATE tasks SET completed = !completed WHERE id = ? AND userid = ?',
     [id, userID],
   );
   return rows.affectedRows;

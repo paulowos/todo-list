@@ -18,14 +18,16 @@ export default function Todo() {
     });
   }, [navigate]);
 
-  const headers = {
-    Authorization: token,
-  };
-  const fetcher = (url) => axios.get(url, { headers }).then((res) => res.data);
   const { hostname } = window.location;
   const { data, error, isLoading } = useSWR(
     `http://${hostname}:3000/tasks`,
-    fetcher
+    async (url) => {
+      const headers = {
+        Authorization: await localForage.getItem('id'),
+      };
+      const { data } = await axios.get(url, { headers });
+      return data;
+    }
   );
 
   return (
@@ -36,7 +38,7 @@ export default function Todo() {
         {isLoading || error ? (
           <div className="loading" />
         ) : (
-          <div className="flex flex-col items-center w-full gap-3">
+          <div className="flex flex-col items-center w-full gap-2">
             {data &&
               data.length > 0 &&
               data.map((task) => (
@@ -45,6 +47,7 @@ export default function Todo() {
                   id={task.id}
                   task={task.task}
                   completed={task.completed}
+                  token={token}
                 />
               ))}
           </div>
