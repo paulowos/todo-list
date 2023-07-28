@@ -28,7 +28,7 @@ export default function EditInput({ task, id, setIsEditing }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="z-50 flex-row items-center justify-between w-full gap-3 form-control">
+      className="flex-row items-center justify-between w-full gap-3 form-control">
       <input
         type="text"
         className="w-11/12 input input-bordered input-sm "
