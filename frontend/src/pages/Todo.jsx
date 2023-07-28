@@ -7,6 +7,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import TaskCard from '../components/TaskCard';
 import urls from '../utils/urls';
+import Drawer from '../components/Drawer';
 
 export default function Todo() {
   const navigate = useNavigate();
@@ -26,17 +27,16 @@ export default function Todo() {
   });
 
   return (
-    <div className="bg-base-300">
-      <Header />
-
-      <main className="flex justify-center max-w-6xl min-h-screen pt-20 pb-5 m-auto overflow-scroll bg-base-200">
-        {isLoading || error ? (
-          <div className="loading" />
-        ) : (
-          <div className="flex flex-col items-center w-full gap-2">
-            {data &&
-              data.length > 0 &&
-              data.map((task) => (
+    <div className="drawer drawer-end bg-base-300 2xl:drawer-open">
+      <input type="checkbox" id="my_drawer" className="drawer-toggle" />
+      <div className="drawer-content">
+        <Header />
+        <main className="flex justify-center max-w-5xl min-h-screen pt-20 pb-5 m-auto overflow-scroll bg-base-200">
+          {isLoading || error ? (
+            <div className="loading" />
+          ) : (
+            <div className="flex flex-col items-center w-full gap-2">
+              {data?.map((task) => (
                 <TaskCard
                   key={task.id}
                   id={task.id}
@@ -44,9 +44,13 @@ export default function Todo() {
                   completed={task.completed}
                 />
               ))}
-          </div>
-        )}
-      </main>
+            </div>
+          )}
+        </main>
+      </div>
+      <div className="drawer-side">
+        <Drawer />
+      </div>
     </div>
   );
 }
