@@ -45,23 +45,24 @@ export default function EditInput({ task, id, setIsEditing }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex-row items-center justify-between w-full gap-3 form-control">
-      <label className="flex flex-col w-full gap-2 ">
+      className="flex-row items-center justify-end w-full gap-3 form-control">
+      <label className="flex flex-col justify-center w-full gap-2 ">
         <input
           type="text"
-          className={`w-11/12 input input-bordered input-sm ${
+          className={`w-full input input-bordered input-sm ${
             error.bool && 'input-error'
           }`}
           autoFocus
           value={value}
           onChange={handleChange}
         />
-        <span className="pl-2 label-text-alt text-error">
-          {error.bool && error.message}
-        </span>
+        {error.bool && (
+          <span className="pl-1 label-text-alt text-error">
+            {error.message}
+          </span>
+        )}
       </label>
-      <span>{`${value.length}/255`}</span>
-
+      <span className="label-text-alt">{`${value.length}/255`}</span>
       <button type="submit" className="btn-sm btn btn-ghost btn-circle">
         <ConfirmSVG />
       </button>

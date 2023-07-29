@@ -25,7 +25,7 @@ export default function TaskCard({ data }) {
   return (
     <div className="flex-row items-center w-11/12 shadow cursor-pointer bg-base-100 card-compact card">
       {isEditing ? (
-        <div className="w-4/5 card-body">
+        <div className="w-4/5 card-body ">
           <EditInput task={task} id={id} setIsEditing={setIsEditing} />
         </div>
       ) : (
