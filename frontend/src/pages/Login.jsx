@@ -69,7 +69,7 @@ export default function Login() {
       setIsLoading(false);
       setError({
         path: 'form',
-        message: err.response.data.error,
+        message: err.response.data.error || 'Error',
       });
     }
   };

@@ -12,6 +12,7 @@ export default function DeleteBtn({ id }) {
     const headers = {
       Authorization: await localForage.getItem('id'),
     };
+    console.log(id);
     const url = `${urls.tasksURL}/${id}`;
     await axios.delete(url, { headers });
     mutate(urls.tasksURL);
@@ -19,22 +20,24 @@ export default function DeleteBtn({ id }) {
   return (
     <>
       <button
-        onClick={() => window.my_modal.showModal()}
+        onClick={() => window[`my_modal_${id}`].showModal()}
         className="btn-sm btn btn-ghost btn-circle">
         <DeleteSVG />
       </button>
-      <dialog id="my_modal" className="modal modal-bottom sm:modal-middle">
+      <dialog id={`my_modal_${id}`} className="modal modal-middle">
         <form method="dialog" className="modal-box">
           <p className="py-4">Tem certeza que deseja excluir essa tarefa?</p>
           <div className="modal-action">
-            <button className="btn btn-warning">Cancelar</button>
-            <button onClick={deleteTaskHandler} className="btn btn-error">
+            <button className="btn btn-sm btn-warning">Cancelar</button>
+            <button
+              onClick={deleteTaskHandler}
+              className="btn btn-error btn-sm">
               Excluir
             </button>
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button>close</button>
+          <button />
         </form>
       </dialog>
     </>

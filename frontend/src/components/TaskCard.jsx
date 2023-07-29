@@ -8,7 +8,8 @@ import EditBtn from './EditBtn';
 import EditInput from './EditInput';
 import { useSWRConfig } from 'swr';
 
-export default function TaskCard({ id, task, completed }) {
+export default function TaskCard({ data }) {
+  const { id, task, completed } = data;
   const [isEditing, setIsEditing] = useState(false);
   const { mutate } = useSWRConfig();
 
@@ -22,7 +23,7 @@ export default function TaskCard({ id, task, completed }) {
   };
 
   return (
-    <div className="flex-row items-center w-11/12 shadow bg-base-100 card-compact card">
+    <div className="flex-row items-center w-11/12 shadow cursor-pointer bg-base-100 card-compact card">
       {isEditing ? (
         <div className="w-4/5 card-body">
           <EditInput task={task} id={id} setIsEditing={setIsEditing} />
@@ -37,7 +38,7 @@ export default function TaskCard({ id, task, completed }) {
           </p>
         </div>
       )}
-      <div>
+      <div className="w-10">
         <EditBtn isEditing={isEditing} setIsEditing={setIsEditing} />
         <DeleteBtn id={id} />
       </div>
@@ -46,7 +47,9 @@ export default function TaskCard({ id, task, completed }) {
 }
 
 TaskCard.propTypes = {
-  completed: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-  task: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    completed: PropTypes.number,
+    id: PropTypes.string,
+    task: PropTypes.string,
+  }).isRequired,
 };

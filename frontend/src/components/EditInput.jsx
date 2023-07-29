@@ -5,17 +5,34 @@ import localForage from 'localforage';
 import urls from '../utils/urls';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
+import taskSchema from '../schemas/task';
 
 export default function EditInput({ task, id, setIsEditing }) {
   const [value, setValue] = useState(task);
+  const [error, setError] = useState({ bool: false, message: '' });
+
   const { mutate } = useSWRConfig();
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const handleChange = ({ target }) => {
+    if (target.value.length > 255) return;
+    setValue(target.value);
+    setError({ ...error, bool: false });
   };
 
+  const taskValidation = () => {
+    try {
+      taskSchema.parse({ task: value });
+      setError({ ...error, bool: false });
+      return true;
+    } catch (err) {
+      setError({ bool: true, message: err.issues[0].message });
+      return false;
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validation = taskValidation();
+    if (!validation) return;
     const headers = {
       Authorization: await localForage.getItem('id'),
     };
@@ -29,13 +46,21 @@ export default function EditInput({ task, id, setIsEditing }) {
     <form
       onSubmit={handleSubmit}
       className="flex-row items-center justify-between w-full gap-3 form-control">
-      <input
-        type="text"
-        className="w-11/12 input input-bordered input-sm "
-        autoFocus
-        value={value}
-        onChange={handleChange}
-      />
+      <label className="flex flex-col w-full gap-2 ">
+        <input
+          type="text"
+          className={`w-11/12 input input-bordered input-sm ${
+            error.bool && 'input-error'
+          }`}
+          autoFocus
+          value={value}
+          onChange={handleChange}
+        />
+        <span className="pl-2 label-text-alt text-error">
+          {error.bool && error.message}
+        </span>
+      </label>
+      <span>{`${value.length}/255`}</span>
 
       <button type="submit" className="btn-sm btn btn-ghost btn-circle">
         <ConfirmSVG />
