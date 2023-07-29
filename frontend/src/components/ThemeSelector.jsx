@@ -1,10 +1,10 @@
 export default function ThemeSelector() {
   return (
     <label htmlFor="themeSelect" className="font-bold label">
-      Temas
+      Tema:
       <select
         id="themeSelect"
-        className="select select-ghost select-sm"
+        className="select select-ghost select-xs"
         data-choose-theme>
         <option value={''}>Sistema</option>
         <option value={'dark'}>Dark</option>
