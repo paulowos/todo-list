@@ -34,6 +34,10 @@ export default function Login() {
       ...form,
       [e.target.name]: e.target.value,
     });
+    setError({
+      path: '',
+      message: '',
+    });
   };
 
   const formValidation = () => {

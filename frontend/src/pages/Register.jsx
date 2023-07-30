@@ -87,7 +87,7 @@ export default function Register() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-center w-screen form-control">
+        className="flex items-center justify-center w-screen gap-2 form-control">
         <Input
           placeholder={'Email'}
           name={'email'}

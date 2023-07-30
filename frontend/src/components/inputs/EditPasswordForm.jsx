@@ -26,6 +26,10 @@ export default function EditPasswordForm() {
       ...form,
       [e.target.name]: e.target.value,
     });
+    setError({
+      path: '',
+      message: '',
+    });
   };
 
   const formValidation = () => {
@@ -36,10 +40,11 @@ export default function EditPasswordForm() {
         message: '',
       });
       return true;
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       setError({
-        path: error.issues[0].path[0],
-        message: error.issues[0].message,
+        path: err.issues[0].path[0],
+        message: err.issues[0].message,
       });
       return false;
     }
@@ -52,11 +57,10 @@ export default function EditPasswordForm() {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.put(urls.userURL, form);
+      await axios.put(urls.userURL, form);
       await localForage.clear();
-      navigate('/login');
+      window.change_password_modal.showModal();
     } catch (err) {
-      console.log(err);
       setIsLoading(false);
       setError({
         path: 'form',
@@ -65,41 +69,64 @@ export default function EditPasswordForm() {
     }
   };
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="items-center w-full gap-2 form-control">
-      <Input
-        error={error}
-        onChange={handleChange}
-        value={form.email}
-        name="email"
-        type="email"
-        placeholder="Email"
-      />
-      <Input
-        error={error}
-        onChange={handleChange}
-        value={form.password}
-        name="password"
-        type="password"
-        placeholder="Senha"
-      />
-      <Input
-        error={error}
-        onChange={handleChange}
-        value={form.newPassword}
-        name="newPassword"
-        type="password"
-        placeholder="Nova Senha"
-      />
+  const handleOk = async () => {
+    setError({
+      path: '',
+      message: '',
+    });
 
-      <span className="font-bold label-text text-error">
-        {error.path === 'form' && error.message}
-      </span>
-      <button type="submit" className="btn btn-success">
-        <span className={isLoading ? 'loading' : ''}>Confirmar</span>
-      </button>
-    </form>
+    navigate('/login');
+  };
+
+  return (
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="items-center w-full gap-2 form-control">
+        <Input
+          error={error}
+          onChange={handleChange}
+          value={form.email}
+          name="email"
+          type="email"
+          placeholder="Email"
+        />
+        <Input
+          error={error}
+          onChange={handleChange}
+          value={form.password}
+          name="password"
+          type="password"
+          placeholder="Senha Atual"
+        />
+        <Input
+          error={error}
+          onChange={handleChange}
+          value={form.newPassword}
+          name="newPassword"
+          type="password"
+          placeholder="Nova Senha"
+        />
+
+        <span className="font-bold label-text text-error">
+          {error.path === 'form' && error.message}
+        </span>
+        <button type="submit" className="btn btn-success">
+          <span className={isLoading ? 'loading' : ''}>Confirmar</span>
+        </button>
+      </form>
+      <dialog id={`change_password_modal`} className="modal modal-middle">
+        <form method="dialog" className="modal-box">
+          <p className="py-4 text-center text-success">
+            Senha alterada com sucesso
+          </p>
+          <div className="justify-center modal-action">
+            <button className="btn btn-success" onClick={handleOk}>
+              Fazer Login
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </>
   );
 }
