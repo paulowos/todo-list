@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export default function ChangePasswordBtn({ isEditing, setIsEditing }) {
   const handleClick = () => {
     setIsEditing(!isEditing);
@@ -9,3 +10,8 @@ export default function ChangePasswordBtn({ isEditing, setIsEditing }) {
     </button>
   );
 }
+
+ChangePasswordBtn.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  setIsEditing: PropTypes.func.isRequired,
+};
