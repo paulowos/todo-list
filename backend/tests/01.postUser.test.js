@@ -51,7 +51,7 @@ describe('Testando método POST "/user"', function () {
 
     expect(response.status).to.equal(401);
     expect(response.body).to.have.property('error');
-    expect(response.body.error).to.equal('Senha inválida');
+    expect(response.body.error).to.equal('Senha incorreta');
   });
 
   it('Não deve conseguir logar ao errar a email', async function () {
