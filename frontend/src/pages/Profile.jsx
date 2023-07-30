@@ -27,7 +27,7 @@ export default function Profile() {
       <input type="checkbox" id="my_drawer" className="drawer-toggle" />
       <div className="drawer-content">
         <Header />
-        <main className="flex flex-col items-center justify-between w-full max-w-5xl min-h-screen pt-24 pb-5 m-auto bg-base-100">
+        <main className="flex flex-col items-center justify-between w-full max-w-5xl min-h-screen pt-24 pb-5 m-auto bg-base-200">
           <div className="flex flex-col items-center justify-center w-full gap-10 ">
             <h1 className="text-4xl font-bold text-center text-secondary">
               {name}
