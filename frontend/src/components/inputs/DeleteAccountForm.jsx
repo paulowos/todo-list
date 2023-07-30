@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Input from './Input';
-import changePasswordSchema from '../../schemas/changePassword';
 import axios from 'axios';
 import urls from '../../utils/urls';
 import localForage from 'localforage';
 import { useNavigate } from 'react-router-dom';
+import loginSchema from '../../schemas/login';
 
-export default function EditPasswordForm() {
+export default function DeleteAccountForm() {
   const navigate = useNavigate();
   const [error, setError] = useState({
     path: '',
@@ -16,7 +16,6 @@ export default function EditPasswordForm() {
   const [form, setForm] = useState({
     email: '',
     password: '',
-    newPassword: '',
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +33,7 @@ export default function EditPasswordForm() {
 
   const formValidation = () => {
     try {
-      changePasswordSchema.parse(form);
+      loginSchema.parse(form);
       setError({
         path: '',
         message: '',
@@ -53,28 +52,27 @@ export default function EditPasswordForm() {
     e.preventDefault();
     const isValid = formValidation();
     if (!isValid) return;
+    setIsLoading(true);
+    window.delete_account_modal.showModal();
+  };
 
+  const handleOk = async () => {
     try {
-      setIsLoading(true);
-      await axios.put(urls.userURL, form);
+      setError({
+        path: '',
+        message: '',
+      });
+      await axios.delete(urls.userURL, { data: form });
       await localForage.clear();
-      window.change_password_modal.showModal();
+      navigate('/login');
     } catch (err) {
       setIsLoading(false);
       setError({
         path: 'form',
         message: err.response.data.error || 'Error',
       });
+      window.delete_account_modal.closeModal();
     }
-  };
-
-  const handleOk = async () => {
-    setError({
-      path: '',
-      message: '',
-    });
-
-    navigate('/login');
   };
 
   return (
@@ -96,32 +94,53 @@ export default function EditPasswordForm() {
           value={form.password}
           name="password"
           type="password"
-          placeholder="Senha Atual"
-        />
-        <Input
-          error={error}
-          onChange={handleChange}
-          value={form.newPassword}
-          name="newPassword"
-          type="password"
-          placeholder="Nova Senha"
+          placeholder="Senha"
         />
 
         <span className="font-bold label-text text-error">
           {error.path === 'form' && error.message}
         </span>
-        <button type="submit" className="btn btn-success">
-          <span className={isLoading ? 'loading' : ''}>Confirmar</span>
+        <button type="submit" className="btn btn-error">
+          <span className={isLoading ? 'loading' : ''}>Excluir</span>
         </button>
       </form>
-      <dialog id={`change_password_modal`} className="modal modal-middle">
+      <dialog id={`delete_account_modal`} className="modal modal-middle">
         <form method="dialog" className="modal-box">
-          <p className="py-4 text-center">Senha alterada com sucesso!</p>
+          <p className="py-4 text-center">
+            Deseja realmente excluir sua conta?
+          </p>
+          <p className="text-center text-error py4">
+            Todos os seus dados serão perdidos!
+          </p>
           <div className=" modal-action">
-            <button className="btn btn-sm btn-success" onClick={handleOk}>
-              Fazer Login
+            <button
+              className="btn btn-sm btn-warning"
+              onClick={() => {
+                setIsLoading(false);
+                setForm({
+                  email: '',
+                  password: '',
+                });
+              }}>
+              Cancelar
+            </button>
+            <button
+              className="btn btn-sm btn-ghost text-error"
+              onClick={handleOk}>
+              Excluir
             </button>
           </div>
+        </form>
+        <form method="dialog" className="modal-backdrop">
+          <button
+            onClick={() => {
+              setIsLoading(false);
+              setForm({
+                email: '',
+                password: '',
+              });
+            }}
+          />
         </form>
       </dialog>
     </>

@@ -7,10 +7,12 @@ import Drawer from '../components/Drawer';
 import ChangePasswordBtn from '../components/buttons/ChangePasswordBtn';
 import DeleteAccountBtn from '../components/buttons/DeleteAccountBtn';
 import EditPasswordForm from '../components/inputs/EditPasswordForm';
+import DeleteAccountForm from '../components/inputs/DeleteAccountForm';
 
 export default function Profile() {
   const [name, setName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     themeChange(false);
@@ -27,18 +29,22 @@ export default function Profile() {
       <input type="checkbox" id="my_drawer" className="drawer-toggle" />
       <div className="drawer-content">
         <Header />
-        <main className="flex flex-col items-center justify-between w-full max-w-5xl min-h-screen pt-24 pb-5 m-auto bg-base-200">
-          <div className="flex flex-col items-center justify-center w-full gap-10 ">
-            <h1 className="text-4xl font-bold text-center text-secondary">
-              {name}
-            </h1>
-            <ChangePasswordBtn
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-            {isEditing && <EditPasswordForm />}
-          </div>
-          <DeleteAccountBtn />
+        <main className="flex flex-col items-center justify-center max-w-5xl min-h-screen gap-10 m-auto bg-base-200">
+          <h1 className="text-4xl font-bold text-center text-secondary">
+            {name}
+          </h1>
+          <ChangePasswordBtn
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            setIsDeleting={setIsDeleting}
+          />
+          {isEditing && <EditPasswordForm />}
+          <DeleteAccountBtn
+            setIsEditing={setIsEditing}
+            isDeleting={isDeleting}
+            setIsDeleting={setIsDeleting}
+          />
+          {isDeleting && <DeleteAccountForm />}
         </main>
       </div>
       <div className="drawer-side">

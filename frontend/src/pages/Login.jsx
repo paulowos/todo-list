@@ -69,7 +69,6 @@ export default function Login() {
       await localForage.setItem('name', data.name);
       navigate('/');
     } catch (err) {
-      console.log(err);
       setIsLoading(false);
       setError({
         path: 'form',
