@@ -20,11 +20,11 @@ export default function Input({
         value={value}
         name={name}
       />
-      <label className="label">
-        <span className="font-bold label-text-alt text-error">
-          {path === name && message}
-        </span>
-      </label>
+      {path === name && (
+        <label className="label">
+          <span className="font-bold label-text-alt text-error">{message}</span>
+        </label>
+      )}
     </div>
   );
 }

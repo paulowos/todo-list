@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import localForage from 'localforage';
 import axios from 'axios';
-import urls from '../utils/urls';
+import urls from '../../utils/urls';
 import { useSWRConfig } from 'swr';
-import taskSchema from '../schemas/task';
+import taskSchema from '../../schemas/task';
 
 export default function NewTaskInput() {
   const [task, setTask] = useState('');

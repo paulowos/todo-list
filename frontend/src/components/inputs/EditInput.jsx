@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import ConfirmSVG from '../assets/ConfirmSVG';
+import ConfirmSVG from '../../assets/ConfirmSVG';
 import localForage from 'localforage';
-import urls from '../utils/urls';
+import urls from '../../utils/urls';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
-import taskSchema from '../schemas/task';
+import taskSchema from '../../schemas/task';
 
 export default function EditInput({ task, id, setIsEditing }) {
   const [value, setValue] = useState(task);

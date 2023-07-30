@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import ProfileSVG from '../assets/ProfileSVG';
-import ThemeSelector from './ThemeSelector';
+import ThemeSelector from './inputs/ThemeSelector';
 import localForage from 'localforage';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,10 +12,10 @@ export default function Header() {
   };
   return (
     <header className="fixed top-0 z-20 h-10 shadow bg-base-100 navbar">
-      <div className="flex items-end flex-1 gap-1 ml-1 text-primary">
+      <Link to="/" className="flex items-end flex-1 gap-1 ml-1 text-primary">
         <h1 className="text-4xl ">Simple</h1>
         <h2 className="text-xl ">note</h2>
-      </div>
+      </Link>
 
       <div className="mr-1">
         <label

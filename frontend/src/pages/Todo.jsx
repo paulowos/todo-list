@@ -8,7 +8,7 @@ import useSWRImmutable from 'swr';
 import TaskCard from '../components/TaskCard';
 import urls from '../utils/urls';
 import Drawer from '../components/Drawer';
-import NewTaskInput from '../components/NewTaskInput';
+import NewTaskInput from '../components/inputs/NewTaskInput';
 
 export default function Todo() {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import ThemeSelector from './ThemeSelector';
+import ThemeSelector from './inputs/ThemeSelector';
 import localForage from 'localforage';
 
 export default function Drawer() {

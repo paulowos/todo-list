@@ -3,9 +3,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import urls from '../utils/urls';
 import localForage from 'localforage';
-import DeleteBtn from './DeleteBtn';
-import EditBtn from './EditBtn';
-import EditInput from './EditInput';
+import DeleteBtn from './buttons/DeleteBtn';
+import EditBtn from './buttons/EditBtn';
+import EditInput from './inputs/EditInput';
 import { useSWRConfig } from 'swr';
 
 export default function TaskCard({ data }) {

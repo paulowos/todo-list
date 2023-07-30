@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import localForage from 'localforage';
-import DeleteSVG from '../assets/DeleteSVG';
-import urls from '../utils/urls';
+import DeleteSVG from '../../assets/DeleteSVG';
+import urls from '../../utils/urls';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
 

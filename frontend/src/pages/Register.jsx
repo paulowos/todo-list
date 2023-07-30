@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { themeChange } from 'theme-change';
-import Input from '../components/Input';
+import Input from '../components/inputs/Input';
 import registerSchema from '../schemas/register';
 import axios from 'axios';
 import localForage from 'localforage';

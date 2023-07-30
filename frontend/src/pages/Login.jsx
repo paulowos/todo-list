@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { themeChange } from 'theme-change';
-import Input from '../components/Input';
+import Input from '../components/inputs/Input';
 import loginSchema from '../schemas/login';
 import axios from 'axios';
 import localForage from 'localforage';
@@ -63,7 +63,7 @@ export default function Login() {
       const { data } = await axios.post(urls.userURL, form);
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
-      navigate('/', { state: { id: data.id } });
+      navigate('/');
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -83,7 +83,7 @@ export default function Login() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-center w-screen form-control">
+        className="flex items-center justify-center w-screen gap-2 form-control ">
         <Input
           placeholder={'Email'}
           name={'email'}

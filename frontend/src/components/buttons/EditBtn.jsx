@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import EditSVG from '../assets/EditSVG';
+import EditSVG from '../../assets/EditSVG';
 
 export default function EditBtn({ isEditing, setIsEditing }) {
   const handleClick = () => {
