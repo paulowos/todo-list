@@ -33,9 +33,16 @@ export default function NewTaskInput() {
     const headers = {
       Authorization: await localForage.getItem('id'),
     };
-    await axios.post(urls.tasksURL, { task }, { headers });
-    setTask('');
-    mutate(urls.tasksURL);
+    try {
+      await axios.post(urls.tasksURL, { task }, { headers });
+      setTask('');
+      mutate(urls.tasksURL);
+    } catch (err) {
+      setError({
+        bool: true,
+        message: err?.response?.data?.error,
+      });
+    }
   };
 
   return (

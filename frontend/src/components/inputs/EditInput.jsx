@@ -38,9 +38,16 @@ export default function EditInput({ task, id, setIsEditing }) {
     };
 
     const url = `${urls.tasksURL}/${id}`;
-    await axios.put(url, { task: value }, { headers });
-    mutate(urls.tasksURL);
-    setIsEditing(false);
+    try {
+      await axios.put(url, { task: value }, { headers });
+      mutate(urls.tasksURL);
+      setIsEditing(false);
+    } catch (err) {
+      setError({
+        bool: true,
+        message: err?.response?.data?.error,
+      });
+    }
   };
   return (
     <form

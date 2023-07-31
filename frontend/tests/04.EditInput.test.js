@@ -67,7 +67,6 @@ describe('Edit Input', () => {
     await waitFor(() => {
       editBtn = container.getElementsByClassName('edit-svg');
     });
-
     await userEvent.click(editBtn[0].parentElement);
     const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
     await userEvent.clear(editInput);
@@ -96,6 +95,23 @@ describe('Edit Input', () => {
     await userEvent.type(editInput, '{enter}');
     expect(axios.put.calledWith(`${urls.tasksURL}/${constants.data[0].id}`)).toBe(true);
     expect(editInput).not.toBeInTheDocument();
+  });
 
+  it('Não deve ser possível editar quando ocorrer um erro', async () => {
+    sinon.stub(axios, 'put').rejects({ response: { data: { error: 'Erro ao editar' } } });
+    const { container } = renderApp('/');
+    let editBtn = undefined;
+    await waitFor(() => {
+      editBtn = container.getElementsByClassName('edit-svg');
+    });
+    await userEvent.click(editBtn[0].parentElement);
+    const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
+    userEvent.clear(editInput);
+    expect(editInput).toHaveValue('');
+    await userEvent.type(editInput, 'xxxxxx');
+    expect(editInput).toHaveValue('xxxxxx');
+    await userEvent.type(editInput, '{enter}');
+    const erro = await screen.findByText('Erro ao editar');
+    expect(erro).toBeInTheDocument();
   });
 });

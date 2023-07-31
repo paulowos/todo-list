@@ -11,6 +11,7 @@ import { useSWRConfig } from 'swr';
 export default function TaskCard({ data }) {
   const { id, task, completed } = data;
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState({ bool: false, message: '' });
   const { mutate } = useSWRConfig();
 
   const completedTaskHandler = async () => {
@@ -18,8 +19,16 @@ export default function TaskCard({ data }) {
       Authorization: await localForage.getItem('id'),
     };
     const url = `${urls.tasksURL}/${id}`;
-    await axios.patch(url, null, { headers });
-    mutate(urls.tasksURL);
+    try {
+      await axios.patch(url, null, { headers });
+      setError({ bool: false });
+      mutate(urls.tasksURL);
+    } catch (err) {
+      setError({
+        bool: true,
+        message: err?.response?.data?.error,
+      });
+    }
   };
 
   return (
@@ -36,6 +45,7 @@ export default function TaskCard({ data }) {
             }`}>
             {task}
           </p>
+          {error.bool && <p className="text-error">{error.message}</p>}
         </div>
       )}
       <div className="w-10">
