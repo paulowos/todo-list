@@ -54,6 +54,7 @@ export default function EditInput({ task, id, setIsEditing }) {
           }`}
           autoFocus
           value={value}
+          placeholder="Edite sua tarefa..."
           onChange={handleChange}
         />
         {error.bool && (
