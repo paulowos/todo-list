@@ -72,7 +72,7 @@ export default function Login() {
       setIsLoading(false);
       setError({
         path: 'form',
-        message: err.response.data.error || 'Error',
+        message: err?.response?.data?.error,
       });
     }
   };
@@ -90,7 +90,7 @@ export default function Login() {
         <Input
           placeholder={'Email'}
           name={'email'}
-          type={'email'}
+          type={'text'}
           value={email}
           onChange={handleChange}
           error={error}
