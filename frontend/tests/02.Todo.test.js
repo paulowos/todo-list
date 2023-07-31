@@ -77,5 +77,14 @@ describe('Todo', () => {
     expect(erro).toBeInTheDocument();
   });
 
-
+  it('Deve conseguir sair pela navbar', async () => {
+    sinon.stub(axios, 'get').resolves({ data: constants.data });
+    const spy = sinon.spy(localForage, 'clear');
+    renderApp('/');
+    const sairBtn = await screen.findAllByText('Sair');
+    await userEvent.click(sairBtn[0]);
+    expect(spy.called).toBe(true);
+    const entrarBtn = await screen.findByText('Entrar');
+    expect(entrarBtn).toBeInTheDocument();
+  });
 });

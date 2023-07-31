@@ -1,15 +1,11 @@
 import { Link } from 'react-router-dom';
 import ProfileSVG from '../assets/ProfileSVG';
 import ThemeSelector from './inputs/ThemeSelector';
-import localForage from 'localforage';
-import { useNavigate } from 'react-router-dom';
+import useExit from '../hooks/useExit';
 
 export default function Header() {
-  const navigate = useNavigate();
-  const handleExit = async () => {
-    await localForage.clear();
-    navigate('/login');
-  };
+  const handleExit = useExit();
+
   return (
     <header className="fixed top-0 z-20 h-10 shadow bg-base-100 navbar">
       <Link to="/" className="flex items-end flex-1 gap-1 ml-1 text-primary">

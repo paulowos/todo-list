@@ -1,14 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ThemeSelector from './inputs/ThemeSelector';
-import localForage from 'localforage';
+import useExit from '../hooks/useExit';
 
 export default function Drawer() {
-  const navigate = useNavigate();
-
-  const handleExit = async () => {
-    await localForage.clear();
-    navigate('/login');
-  };
+  const handleExit = useExit();
   return (
     <>
       <label htmlFor="my_drawer" className="drawer-overlay"></label>
