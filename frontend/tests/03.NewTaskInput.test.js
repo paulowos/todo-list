@@ -62,4 +62,16 @@ describe('New Task Input', () => {
     expect(addTaskInput).toHaveValue('x'.repeat(255));
     expect(spy.notCalled).toBe(true);
   });
+
+  it('Não deve ser possível adicionar uma tarefa quando ocorrer um erro', async () => {
+    sinon.stub(axios, 'post').rejects({ response: { data: { error: 'Erro ao adicionar' } } });
+    renderApp('/');
+    const addTaskInput = await screen.findByPlaceholderText('Digite a sua tarefa...');
+    const addBtn = await screen.findByText('Adicionar');
+    await userEvent.type(addTaskInput, 'teste task');
+    expect(addTaskInput).toHaveValue('teste task');
+    await userEvent.click(addBtn);
+    const erro = await screen.findByText('Erro ao adicionar');
+    expect(erro).toBeInTheDocument();
+  });
 });
