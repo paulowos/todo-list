@@ -5,7 +5,8 @@ import constants from "./helpers/constants";
 import sinon from "sinon";
 import axios from "axios";
 import localForage from "localforage";
-
+import urls from "../src/utils/urls";
+import userEvent from '@testing-library/user-event';
 
 
 describe('Todo', () => {
@@ -56,4 +57,25 @@ describe('Todo', () => {
     const erro = await screen.findByText('Erro');
     expect(erro).toBeInTheDocument();
   });
+
+  it('Deve ser possível completar uma tarefa', async () => {
+    sinon.stub(axios, 'get').resolves({ data: constants.data });
+    sinon.stub(axios, 'patch').resolves();
+    renderApp('/');
+    const task = await screen.findByText(constants.data[0].task);
+    await userEvent.click(task);
+    expect(axios.patch.calledWith(`${urls.tasksURL}/${constants.data[0].id}`)).toBe(true);
+  });
+
+  it('Não deve ser possível completar uma tarefa quando ocorrer um erro', async () => {
+    sinon.stub(axios, 'get').resolves({ data: constants.data });
+    sinon.stub(axios, 'patch').rejects({ response: { data: { error: 'Erro' } } });
+    renderApp('/');
+    const task = await screen.findByText(constants.data[0].task);
+    await userEvent.click(task);
+    const erro = await screen.findByText('Erro');
+    expect(erro).toBeInTheDocument();
+  });
+
+
 });
