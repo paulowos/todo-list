@@ -5,7 +5,7 @@ export default function ConfirmSVG() {
       viewBox="0 0 32 32"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 text-success">
+      className="w-5 h-5 text-success confirm-svg">
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"

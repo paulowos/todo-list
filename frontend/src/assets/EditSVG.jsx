@@ -4,7 +4,7 @@ export default function EditSVG() {
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
-      className="w-5 h-5 text-accent">
+      className="w-5 h-5 text-accent edit-svg">
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"

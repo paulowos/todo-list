@@ -4,7 +4,7 @@ import { themeChange } from 'theme-change';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
-import useSWRImmutable from 'swr';
+import useSWRImmutable from 'swr/immutable';
 import TaskCard from '../components/TaskCard';
 import urls from '../utils/urls';
 import Drawer from '../components/Drawer';
@@ -38,7 +38,7 @@ export default function Todo() {
         <main className="flex justify-center w-screen max-w-5xl min-h-screen pt-20 pb-5 m-auto overflow-scroll bg-base-200">
           {isLoading || error ? (
             <div className={`${isLoading && 'loading'}`}>
-              {error?.response.data.error}
+              {error?.response?.data?.error}
             </div>
           ) : (
             <div className="flex flex-col items-center w-full gap-2">
