@@ -2,12 +2,11 @@ import { useState } from 'react';
 import Input from './Input';
 import axios from 'axios';
 import urls from '../../utils/urls';
-import localForage from 'localforage';
-import { useNavigate } from 'react-router-dom';
 import loginSchema from '../../schemas/login';
+import useExit from '../../hooks/useExit';
 
 export default function DeleteAccountForm() {
-  const navigate = useNavigate();
+  const handleExit = useExit();
   const [error, setError] = useState({
     path: '',
     message: '',
@@ -63,8 +62,7 @@ export default function DeleteAccountForm() {
         message: '',
       });
       await axios.delete(urls.userURL, { data: form });
-      await localForage.clear();
-      navigate('/login');
+      await handleExit();
     } catch (err) {
       setIsLoading(false);
       setError({

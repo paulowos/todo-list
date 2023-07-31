@@ -6,6 +6,7 @@ import axios from 'axios';
 import localForage from 'localforage';
 
 import { useNavigate } from 'react-router-dom';
+import urls from '../utils/urls';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -57,23 +58,18 @@ export default function Register() {
     e.preventDefault();
     const isValid = formValidation();
     if (!isValid) return;
-    const { hostname } = window.location;
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post(
-        `http://${hostname}:3000/user/create`,
-        form
-      );
+      const { data } = await axios.post(urls.userCreateUrl, form);
       await localForage.setItem('id', data.id);
       await localForage.setItem('name', data.name);
       navigate('/');
     } catch (err) {
-      console.log(err);
       setIsLoading(false);
       setError({
         path: 'form',
-        message: err.response.data.error,
+        message: err?.response?.data?.error,
       });
     }
   };

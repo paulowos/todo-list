@@ -19,7 +19,7 @@ user.post('/create', userValidation, async (req, res) => {
     res.status(201).json({ id, name: req.body.name });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: 'Usuário já cadastrado' });
+    res.status(500).json({ error: 'Usuário já cadastrado/Servidor indisponível' });
   }
 });
 
