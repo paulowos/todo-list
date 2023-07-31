@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const getTasks = async (userID) => {
   const [rows] = await connection.execute(`SELECT id, task, completed FROM tasks
-  WHERE userid = ? AND deleted = false ORDER BY creation_date DESC` , [userID]);
+  WHERE userid = ? AND deleted = false ORDER BY creation_date DESC`, [userID]);
   return rows;
 };
 
