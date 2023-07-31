@@ -63,7 +63,7 @@ export default function EditPasswordForm() {
       setIsLoading(false);
       setError({
         path: 'form',
-        message: err.response.data.error || 'Error',
+        message: err?.response?.data?.error,
       });
     }
   };
