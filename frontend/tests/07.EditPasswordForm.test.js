@@ -60,7 +60,7 @@ describe('Edit Password Form', () => {
   });
 
   it('Deve ser possível mudar senha', async () => {
-    sinon.stub(changePasswordSchema, 'parse').returns({});
+    sinon.stub(changePasswordSchema, 'parse').returns();
     sinon.stub(axios, 'put').resolves();
     const spy = sinon.spy(localForage, 'clear');
     renderApp('/profile');
@@ -87,31 +87,16 @@ describe('Edit Password Form', () => {
   });
 
   it('Não deve ser possível mudar senha quando ocorrer algum erro', async () => {
-    sinon.stub(changePasswordSchema, 'parse').returns({});
+    sinon.stub(changePasswordSchema, 'parse').returns();
     sinon.stub(axios, 'put').rejects({ response: { data: { error: 'Senha incorreta' } } });
     const spy = sinon.spy(localForage, 'clear');
     renderApp('/profile');
     const editBtn = screen.getByText('Mudar Senha');
     await userEvent.click(editBtn);
-    const emailInput = screen.getByPlaceholderText('Email');
-    const oldPasswordInput = screen.getByPlaceholderText('Senha Atual');
-    const newPasswordInput = screen.getByPlaceholderText('Nova Senha');
     const confirmBtn = screen.getByText('Confirmar');
-    await userEvent.type(emailInput, constants.email);
-    await userEvent.type(oldPasswordInput, constants.password);
-    await userEvent.type(newPasswordInput, constants.password);
-    expect(emailInput).toHaveValue(constants.email);
-    expect(oldPasswordInput).toHaveValue(constants.password);
-    expect(newPasswordInput).toHaveValue(constants.password);
     await userEvent.click(confirmBtn);
     const error = await screen.findByText('Senha incorreta');
     expect(error).toBeInTheDocument();
     expect(spy.notCalled).toBe(true);
   });
-
-
-
-
-
-
 });

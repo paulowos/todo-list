@@ -52,10 +52,15 @@ export default function DeleteAccountForm() {
     const isValid = formValidation();
     if (!isValid) return;
     setIsLoading(true);
-    window.delete_account_modal.showModal();
+    try {
+      window.delete_account_modal.showModal();
+    } catch (err) {
+      return;
+    }
   };
 
-  const handleOk = async () => {
+  const handleOk = async (e) => {
+    e.preventDefault();
     try {
       setError({
         path: '',
@@ -67,9 +72,21 @@ export default function DeleteAccountForm() {
       setIsLoading(false);
       setError({
         path: 'form',
-        message: err.response.data.error || 'Error',
+        message: err?.response?.data?.error,
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    try {
+      setIsLoading(false);
+      setForm({
+        email: '',
+        password: '',
       });
       window.delete_account_modal.closeModal();
+    } catch (err) {
+      return;
     }
   };
 
@@ -83,7 +100,7 @@ export default function DeleteAccountForm() {
           onChange={handleChange}
           value={form.email}
           name="email"
-          type="email"
+          type="text"
           placeholder="Email"
         />
         <Input
@@ -111,15 +128,7 @@ export default function DeleteAccountForm() {
             Todos os seus dados serão perdidos!
           </p>
           <div className=" modal-action">
-            <button
-              className="btn btn-sm btn-warning"
-              onClick={() => {
-                setIsLoading(false);
-                setForm({
-                  email: '',
-                  password: '',
-                });
-              }}>
+            <button className="btn btn-sm btn-warning" onClick={handleCancel}>
               Cancelar
             </button>
             <button
@@ -130,15 +139,7 @@ export default function DeleteAccountForm() {
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button
-            onClick={() => {
-              setIsLoading(false);
-              setForm({
-                email: '',
-                password: '',
-              });
-            }}
-          />
+          <button onClick={handleCancel} />
         </form>
       </dialog>
     </>

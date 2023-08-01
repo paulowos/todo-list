@@ -68,7 +68,8 @@ export default function EditPasswordForm() {
     }
   };
 
-  const handleOk = async () => {
+  const handleOk = async (e) => {
+    e.preventDefault();
     setError({
       path: '',
       message: '',
