@@ -1,8 +1,9 @@
 const { hostname } = window.location;
+const port = 3000;
 
-const userURL = `http://${hostname}:3000/user`;
-const userCreateUrl = `http://${hostname}:3000/user/create`;
-const tasksURL = `http://${hostname}:3000/tasks`;
+const userURL = `http://${hostname}:${port}/user`;
+const userCreateUrl = `http://${hostname}:${port}/user/create`;
+const tasksURL = `http://${hostname}:${port}/tasks`;
 
 export default {
   userURL,
