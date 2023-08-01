@@ -40,7 +40,6 @@ services:
     command: npm run dev
     networks:
       - db
-      - frontend
 
   frontend:
     build: ./frontend
