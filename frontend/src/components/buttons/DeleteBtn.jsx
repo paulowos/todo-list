@@ -5,23 +5,35 @@ import urls from '../../utils/urls';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
 
-export default function DeleteBtn({ id }) {
+export default function DeleteBtn({ id, setError }) {
   const { mutate } = useSWRConfig();
 
+  const handleClick = async () => {
+    try {
+      window[`my_modal_${id}`].showModal();
+    } catch (err) {
+      return;
+    }
+  };
+
   const deleteTaskHandler = async () => {
-    const headers = {
-      Authorization: await localForage.getItem('id'),
-    };
-    console.log(id);
-    const url = `${urls.tasksURL}/${id}`;
-    await axios.delete(url, { headers });
-    mutate(urls.tasksURL);
+    try {
+      const headers = {
+        Authorization: await localForage.getItem('id'),
+      };
+      const url = `${urls.tasksURL}/${id}`;
+      await axios.delete(url, { headers });
+      mutate(urls.tasksURL);
+    } catch (err) {
+      setError({
+        bool: true,
+        message: err?.response?.data?.error,
+      });
+    }
   };
   return (
     <>
-      <button
-        onClick={() => window[`my_modal_${id}`].showModal()}
-        className="btn-sm btn btn-ghost btn-circle">
+      <button onClick={handleClick} className="btn-sm btn btn-ghost btn-circle">
         <DeleteSVG />
       </button>
       <dialog id={`my_modal_${id}`} className="modal modal-middle">
@@ -46,4 +58,5 @@ export default function DeleteBtn({ id }) {
 
 DeleteBtn.propTypes = {
   id: PropTypes.string.isRequired,
+  setError: PropTypes.func.isRequired,
 };

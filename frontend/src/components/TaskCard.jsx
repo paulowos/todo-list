@@ -50,7 +50,7 @@ export default function TaskCard({ data }) {
       )}
       <div className="w-10">
         <EditBtn isEditing={isEditing} setIsEditing={setIsEditing} />
-        <DeleteBtn id={id} />
+        <DeleteBtn id={id} setError={setError} />
       </div>
     </div>
   );

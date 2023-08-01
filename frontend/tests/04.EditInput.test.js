@@ -20,29 +20,31 @@ describe('Edit Input', () => {
 
   it('Ao clicar no botão de editar, deve ser exibido o input de edição', async () => {
     const { container } = renderApp('/');
+    let editBtn = undefined;
     await waitFor(async () => {
-      const editBtn = container.getElementsByClassName('edit-svg');
-      expect(editBtn[0]).toBeInTheDocument();
-      await userEvent.click(editBtn[0].parentElement);
-      const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
-      const confirmBtn = container.getElementsByClassName('confirm-svg');
-      expect(confirmBtn[0]).toBeInTheDocument();
-      expect(editInput).toBeInTheDocument();
+      editBtn = container.getElementsByClassName('edit-svg');
     });
+    expect(editBtn[0]).toBeInTheDocument();
+    await userEvent.click(editBtn[0].parentElement);
+    const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
+    const confirmBtn = container.getElementsByClassName('confirm-svg');
+    expect(confirmBtn[0]).toBeInTheDocument();
+    expect(editInput).toBeInTheDocument();
 
   });
 
   it('Deve ser possível digitar nos input', async () => {
     const { container } = renderApp('/');
+    let editBtn = undefined;
     await waitFor(async () => {
-      const editBtn = container.getElementsByClassName('edit-svg');
-      await userEvent.click(editBtn[0].parentElement);
-      const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
-      await userEvent.clear(editInput);
-      expect(editInput).toHaveValue('');
-      await userEvent.type(editInput, 'xxxxxx');
-      expect(editInput).toHaveValue('xxxxxx');
+      editBtn = container.getElementsByClassName('edit-svg');
     });
+    await userEvent.click(editBtn[0].parentElement);
+    const editInput = await screen.findByPlaceholderText('Edite sua tarefa...');
+    await userEvent.clear(editInput);
+    expect(editInput).toHaveValue('');
+    await userEvent.type(editInput, 'xxxxxx');
+    expect(editInput).toHaveValue('xxxxxx');
   });
 
   it('Não deve ser possível digitar mais 255 caracteres', async () => {
