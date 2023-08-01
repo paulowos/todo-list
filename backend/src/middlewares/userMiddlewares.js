@@ -86,7 +86,7 @@ const emailVerification = async (req, res, next) => {
   try {
     const rows = await loginUser(req.body);
     if (!rows) return res.status(401).json({ error: 'Email inválido/Não cadastrado' });
-    req.body = { ...req.body, id: rows.id, hash: rows.password };
+    req.body = { ...req.body, id: rows.id, name: rows.name, hash: rows.password };
     next();
   } catch (error) {
     console.log(error.message);
@@ -96,7 +96,7 @@ const emailVerification = async (req, res, next) => {
 
 const passwordVerification = async (req, res, next) => {
   const verification = await argon2.verify(req.body.hash, req.body.password);
-  if (!verification) return res.status(401).json({ error: 'Senha inválida' });
+  if (!verification) return res.status(401).json({ error: 'Senha incorreta' });
   req.body.hash = null;
   req.body.password = null;
   next();

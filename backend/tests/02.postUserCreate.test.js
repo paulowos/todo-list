@@ -53,7 +53,7 @@ describe('Testando método POST "/user/create"', function () {
 
     expect(response.status).to.equal(500);
     expect(response.body).to.have.property('error');
-    expect(response.body.error).to.equal('Usuário já cadastrado');
+    expect(response.body.error).to.equal('Usuário já cadastrado/Servidor indisponível');
   });
 
   it('Não deve conseguir criar um usuário com email inválido', async function () {

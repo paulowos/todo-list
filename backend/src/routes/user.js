@@ -9,17 +9,17 @@ const {
 const user = express.Router();
 
 user.post('/', loginValidation, async (req, res) => {
-  const { id } = req.body;
-  res.status(200).json({ id });
+  const { id, name } = req.body;
+  res.status(200).json({ id, name });
 });
 
 user.post('/create', userValidation, async (req, res) => {
   try {
     const id = await createUser(req.body);
-    res.status(201).json({ id });
+    res.status(201).json({ id, name: req.body.name });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: 'Usuário já cadastrado' });
+    res.status(500).json({ error: 'Usuário já cadastrado/Servidor indisponível' });
   }
 });
 

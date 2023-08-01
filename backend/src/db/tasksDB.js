@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const getTasks = async (userID) => {
   const [rows] = await connection.execute(`SELECT id, task, completed FROM tasks
-  WHERE userid = ? AND deleted = false`, [userID]);
+  WHERE userid = ? AND deleted = false ORDER BY creation_date DESC`, [userID]);
   return rows;
 };
 
@@ -18,7 +18,7 @@ const createTask = async (task, userID) => {
 
 const completeTask = async (id, userID) => {
   const [rows] = await connection.execute(
-    'UPDATE tasks SET completed = true WHERE id = ? AND userid = ? AND completed = false',
+    'UPDATE tasks SET completed = !completed WHERE id = ? AND userid = ?',
     [id, userID],
   );
   return rows.affectedRows;
@@ -26,7 +26,7 @@ const completeTask = async (id, userID) => {
 
 const editTask = async (task, id, userID) => {
   const [rows] = await connection.execute(
-    'UPDATE tasks SET task = ? WHERE id = ? AND userid = ?',
+    'UPDATE tasks SET task = ?, completed = false WHERE id = ? AND userid = ?',
     [task, id, userID],
   );
   return rows.affectedRows;
