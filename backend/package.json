@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha ./tests/**/*.test.js",
     "watch": "mocha ./tests/**/*.test.js --watch",
-    "coverage": "nyc --reporter=html mocha ./tests/**/*.test.js",
+    "coverage": "nyc --reporter=html --reporter=text mocha ./tests/**/*.test.js",
     "lint": "eslint .",
     "dev": "nodemon ./src/server.js",
     "start": "node ./src/server.js"

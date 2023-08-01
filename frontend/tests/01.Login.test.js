@@ -42,6 +42,7 @@ describe('Login', () => {
 
   it('Deve ser possível fazer login', async () => {
     sinon.stub(axios, 'post').resolves({ data: { id: constants.id } });
+    sinon.stub(axios, 'get').resolves({ data: constants.data });
     renderApp('/login');
     const emailInput = screen.getByPlaceholderText('Email');
     const passwordInput = screen.getByPlaceholderText('Senha');
@@ -145,6 +146,7 @@ describe('Login', () => {
 
   it('Deve redirecionar quando já esta logado', async () => {
     sinon.stub(localForage, 'getItem').resolves(constants.id);
+    sinon.stub(axios, 'get').resolves({ data: constants.data });
     renderApp('/login');
     const addTask = await screen.findByPlaceholderText('Digite a sua tarefa...');
     expect(addTask).toBeInTheDocument();

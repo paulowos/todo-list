@@ -40,7 +40,6 @@ services:
     command: npm run dev
     networks:
       - db
-      - frontend
 
   frontend:
     build: ./frontend
@@ -52,9 +51,6 @@ services:
       - backend
     networks:
       - frontend
-    environment:
-      - API_PORT=${API_PORT}
-      - API_HOST=${API_HOST}
     volumes:
       - ./frontend:/app
 
