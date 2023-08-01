@@ -1,5 +1,5 @@
 const { hostname } = window.location;
-const port = 3000;
+const port = import.meta.env.VITE_API_PORT;
 
 const userURL = `http://${hostname}:${port}/user`;
 const userCreateUrl = `http://${hostname}:${port}/user/create`;
