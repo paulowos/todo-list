@@ -5,7 +5,6 @@ const {
   DATABASE_NAME,
   DATABASE_USER,
   DATABASE_PASSWORD,
-  DATABASE_PORT,
 } = process.env;
 
 const connection = mysql.createPool({
@@ -13,7 +12,7 @@ const connection = mysql.createPool({
   user: DATABASE_USER,
   password: DATABASE_PASSWORD,
   database: DATABASE_NAME,
-  port: DATABASE_PORT,
+  port: 3306,
 });
 
 module.exports = connection;
