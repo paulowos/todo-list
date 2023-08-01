@@ -2,6 +2,8 @@
 
 ### Simple note é um projeto full-stack de uma lista de tarefas (To-Do List)
 
+---
+
 <details>
 <summary>Preview</summary>
 
@@ -28,8 +30,6 @@
   </details>
 
   </details>
-
----
 
 <details>
 <summary>Principais Ferramentas Utilizadas</summary><br>
