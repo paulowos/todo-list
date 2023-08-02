@@ -6,6 +6,9 @@
 
 <details>
 <summary>Preview</summary>
+<br/>
+
+![preview](preview.gif)
 
 - <details>
   <summary>Light Mode</summary>
