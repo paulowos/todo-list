@@ -1,5 +1,5 @@
 FROM node:16
-WORKDIR /app
+WORKDIR /app-backend
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm ci
 COPY . .
