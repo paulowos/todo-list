@@ -14,7 +14,7 @@ const createUser = async ({ name, email, password }) => {
 };
 
 const loginUser = async ({ email }) => {
-  const [[rows]] = await connection.query(
+  const { rows } = await connection.query(
     'SELECT id, name, password FROM users WHERE email = $1',
     [email],
   );
@@ -23,19 +23,19 @@ const loginUser = async ({ email }) => {
 
 const editUser = async ({ id, email, newPassword }) => {
   const hash = await argon2.hash(newPassword);
-  const [rows] = await connection.query(
+  const { rowCount } = await connection.query(
     'UPDATE users SET  password = $1 WHERE id = $2 AND email = $3',
     [hash, id, email],
   );
-  return rows.affectedRows;
+  return rowCount;
 };
 
 const deleteUser = async ({ id, email }) => {
-  const [rows] = await connection.execute(
+  const { rowCount } = await connection.query(
     'DELETE FROM users WHERE id = $1 AND email = $2',
     [id, email],
   );
-  return rows.affectedRows;
+  return rowCount;
 };
 
 module.exports = { createUser, loginUser, editUser, deleteUser };

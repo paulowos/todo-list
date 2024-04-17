@@ -1,17 +1,20 @@
-const z = require('zod');
-const argon2 = require('argon2');
-const { loginUser } = require('../db/userDB');
+const z = require("zod");
+const argon2 = require("argon2");
+const { loginUser } = require("../db/userDB");
 
 const emailValidation = (req, res, next) => {
   const schema = z.object({
-    email: z.string({
-      invalid_type_error: '"email" deve ser uma string',
-      required_error: '"email" é obrigatório',
-    }).email({
-      message: '"email" deve ser um email válido',
-    }).max(255, {
-      message: '"email" deve ter no máximo 255 caracteres',
-    }),
+    email: z
+      .string({
+        invalid_type_error: '"email" deve ser uma string',
+        required_error: '"email" é obrigatório',
+      })
+      .email({
+        message: '"email" deve ser um email válido',
+      })
+      .max(255, {
+        message: '"email" deve ter no máximo 255 caracteres',
+      }),
   });
 
   try {
@@ -24,14 +27,17 @@ const emailValidation = (req, res, next) => {
 
 const passwordValidation = (req, res, next) => {
   const schema = z.object({
-    password: z.string({
-      invalid_type_error: '"password" deve ser uma string',
-      required_error: '"password" é obrigatório',
-    }).max(255, {
-      message: '"password" deve ter no máximo 255 caracteres',
-    }).min(8, {
-      message: '"password" deve ter no mínimo 8 caracteres',
-    }),
+    password: z
+      .string({
+        invalid_type_error: '"password" deve ser uma string',
+        required_error: '"password" é obrigatório',
+      })
+      .max(255, {
+        message: '"password" deve ter no máximo 255 caracteres',
+      })
+      .min(8, {
+        message: '"password" deve ter no mínimo 8 caracteres',
+      }),
   });
 
   try {
@@ -44,14 +50,17 @@ const passwordValidation = (req, res, next) => {
 
 const nameValidation = (req, res, next) => {
   const schema = z.object({
-    name: z.string({
-      invalid_type_error: '"name" deve ser uma string',
-      required_error: '"name" é obrigatório',
-    }).max(255, {
-      message: '"name" deve ter no máximo 255 caracteres',
-    }).min(3, {
-      message: '"name" deve ter no mínimo 3 caracteres',
-    }),
+    name: z
+      .string({
+        invalid_type_error: '"name" deve ser uma string',
+        required_error: '"name" é obrigatório',
+      })
+      .max(255, {
+        message: '"name" deve ter no máximo 255 caracteres',
+      })
+      .min(3, {
+        message: '"name" deve ter no mínimo 3 caracteres',
+      }),
   });
 
   try {
@@ -64,14 +73,17 @@ const nameValidation = (req, res, next) => {
 
 const newPasswordValidation = (req, res, next) => {
   const schema = z.object({
-    newPassword: z.string({
-      invalid_type_error: '"newPassword" deve ser uma string',
-      required_error: '"newPassword" é obrigatório',
-    }).max(255, {
-      message: '"newPassword" deve ter no máximo 255 caracteres',
-    }).min(8, {
-      message: '"newPassword" deve ter no mínimo 8 caracteres',
-    }),
+    newPassword: z
+      .string({
+        invalid_type_error: '"newPassword" deve ser uma string',
+        required_error: '"newPassword" é obrigatório',
+      })
+      .max(255, {
+        message: '"newPassword" deve ter no máximo 255 caracteres',
+      })
+      .min(8, {
+        message: '"newPassword" deve ter no mínimo 8 caracteres',
+      }),
   });
 
   try {
@@ -85,18 +97,25 @@ const newPasswordValidation = (req, res, next) => {
 const emailVerification = async (req, res, next) => {
   try {
     const rows = await loginUser(req.body);
-    if (!rows) return res.status(401).json({ error: 'Email inválido/Não cadastrado' });
-    req.body = { ...req.body, id: rows.id, name: rows.name, hash: rows.password };
+    console.log(rows);
+    if (!rows)
+      return res.status(401).json({ error: "Email inválido/Não cadastrado" });
+    req.body = {
+      ...req.body,
+      id: rows.id,
+      name: rows.name,
+      hash: rows.password,
+    };
     next();
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: 'Erro ao autenticar' });
+    res.status(500).json({ error: "Erro ao autenticar" });
   }
 };
 
 const passwordVerification = async (req, res, next) => {
   const verification = await argon2.verify(req.body.hash, req.body.password);
-  if (!verification) return res.status(401).json({ error: 'Senha incorreta' });
+  if (!verification) return res.status(401).json({ error: "Senha incorreta" });
   req.body.hash = null;
   req.body.password = null;
   next();
@@ -104,7 +123,12 @@ const passwordVerification = async (req, res, next) => {
 
 module.exports = {
   userValidation: [nameValidation, emailValidation, passwordValidation],
-  loginValidation: [emailValidation, passwordValidation, emailVerification, passwordVerification],
+  loginValidation: [
+    emailValidation,
+    passwordValidation,
+    emailVerification,
+    passwordVerification,
+  ],
   editValidation: [
     emailValidation,
     passwordValidation,
@@ -112,5 +136,4 @@ module.exports = {
     emailVerification,
     passwordVerification,
   ],
-
 };
