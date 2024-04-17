@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const connection = require('./connection');
 
 const getTasks = async (userID) => {
-  const { rows } = connection.query(
+  const { rows } = await connection.query(
     `SELECT id, task, completed FROM tasks 
      WHERE userid = $1 AND deleted = false ORDER BY creation_date DESC`,
     [userID],
