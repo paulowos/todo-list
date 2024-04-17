@@ -1,9 +1,8 @@
-const { hostname } = window.location;
-const port = import.meta.env.VITE_API_PORT;
+const hostname = import.meta.env.VITE_API_HOSTNAME;
 
-const userURL = `http://${hostname}:${port}/user`;
-const userCreateUrl = `http://${hostname}:${port}/user/create`;
-const tasksURL = `http://${hostname}:${port}/tasks`;
+const userURL = `https://${hostname}/user`;
+const userCreateUrl = `https://${hostname}/user/create`;
+const tasksURL = `https://${hostname}/tasks`;
 
 export default {
   userURL,
