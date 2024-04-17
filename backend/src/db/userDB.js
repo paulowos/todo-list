@@ -5,27 +5,36 @@ const connection = require('./connection');
 const createUser = async ({ name, email, password }) => {
   const id = crypto.randomUUID();
   const hash = await argon2.hash(password);
-  await connection.execute(`INSERT INTO users (id, name, email, password) 
-  VALUES (?, ?, ?, ?)`, [id, name, email, hash]);
+  await connection.query(
+    `INSERT INTO users (id, name, email, password) 
+  VALUES ($1, $2, $3, $4)`,
+    [id, name, email, hash],
+  );
   return id;
 };
 
 const loginUser = async ({ email }) => {
-  const [[rows]] = await connection
-    .execute('SELECT id, name, password FROM users WHERE email = ?', [email]);
+  const [[rows]] = await connection.query(
+    'SELECT id, name, password FROM users WHERE email = $1',
+    [email],
+  );
   return rows;
 };
 
 const editUser = async ({ id, email, newPassword }) => {
   const hash = await argon2.hash(newPassword);
-  const [rows] = await connection
-    .execute('UPDATE users SET  password = ? WHERE id = ? AND email = ?', [hash, id, email]);
+  const [rows] = await connection.query(
+    'UPDATE users SET  password = $1 WHERE id = $2 AND email = $3',
+    [hash, id, email],
+  );
   return rows.affectedRows;
 };
 
 const deleteUser = async ({ id, email }) => {
-  const [rows] = await connection
-    .execute('DELETE FROM users WHERE id = ? AND email = ?', [id, email]);
+  const [rows] = await connection.execute(
+    'DELETE FROM users WHERE id = $1 AND email = $2',
+    [id, email],
+  );
   return rows.affectedRows;
 };
 
