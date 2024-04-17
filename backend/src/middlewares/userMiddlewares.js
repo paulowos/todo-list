@@ -1,6 +1,6 @@
-const z = require('zod');
-const argon2 = require('argon2');
-const { loginUser } = require('../db/userDB');
+const z = require("zod");
+const argon2 = require("argon2");
+const { loginUser } = require("../db/userDB");
 
 const emailValidation = (req, res, next) => {
   const schema = z.object({
@@ -97,8 +97,8 @@ const newPasswordValidation = (req, res, next) => {
 const emailVerification = async (req, res, next) => {
   try {
     const rows = await loginUser(req.body);
-    console.log(rows);
-    if (!rows) return res.status(401).json({ error: 'Email inválido/Não cadastrado' });
+    if (!rows)
+      return res.status(401).json({ error: "Email inválido/Não cadastrado" });
     req.body = {
       ...req.body,
       id: rows.id,
@@ -108,13 +108,13 @@ const emailVerification = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: 'Erro ao autenticar' });
+    res.status(500).json({ error: "Erro ao autenticar" });
   }
 };
 
 const passwordVerification = async (req, res, next) => {
   const verification = await argon2.verify(req.body.hash, req.body.password);
-  if (!verification) return res.status(401).json({ error: 'Senha incorreta' });
+  if (!verification) return res.status(401).json({ error: "Senha incorreta" });
   req.body.hash = null;
   req.body.password = null;
   next();
