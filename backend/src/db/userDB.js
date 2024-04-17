@@ -18,7 +18,7 @@ const loginUser = async ({ email }) => {
     'SELECT id, name, password FROM users WHERE email = $1',
     [email],
   );
-  return rows;
+  return rows[0];
 };
 
 const editUser = async ({ id, email, newPassword }) => {
