@@ -8,16 +8,26 @@ require('express-async-error');
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://paulowos-todo-list-front-2eeddec4a4b6.herokuapp.com',
+    optionsSuccessStatus: 200,
+  }),
+);
 app.use(helmet());
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests from this IP, please try again after 15 minutes.',
-}));
-app.use(morgan('dev', {
-  skip: (_req, _res) => process.env.NODE_ENV === 'test',
-}));
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message:
+      'Too many requests from this IP, please try again after 15 minutes.',
+  }),
+);
+app.use(
+  morgan('dev', {
+    skip: (_req, _res) => process.env.NODE_ENV === 'test',
+  }),
+);
 app.use(express.json());
 
 app.use(router);
